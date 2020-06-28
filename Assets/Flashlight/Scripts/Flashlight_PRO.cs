@@ -21,7 +21,6 @@ public class Flashlight_PRO: MonoBehaviour
     private bool is_enabled = true;
     private bool isPressed = false;
 
-    public Text text;
 
 
 
@@ -42,12 +41,11 @@ public class Flashlight_PRO: MonoBehaviour
 
     public void IsPressed() {
         isPressed=true;
-        text.text += " presed";
     }
 
     void Update() {
         if(Input.GetKeyDown(KeyCode.E)||isPressed||Input.GetKeyDown(KeyCode.Joystick1Button4)) {
-            text.text += " update";
+           
 
             Switch();
             isPressed=false;
@@ -89,7 +87,6 @@ public class Flashlight_PRO: MonoBehaviour
     /// call this from other scripts.
     /// </summary>
     public void Switch() {
-        text.text += " Switch";
 
         is_enabled = !is_enabled;
 

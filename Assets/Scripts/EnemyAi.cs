@@ -1,4 +1,60 @@
-﻿/*using System.Collections;
+﻿
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UI;
+public class EnemyAi : MonoBehaviour
+{
+    [SerializeField]
+    GameObject waypointsGO;
+     
+    private List<Transform> waypointsTrans;
+
+    int index;
+    float speed, agentSpeed;
+    Transform player;
+    NavMeshAgent agenEnemy;
+    bool isWalking = true;
+    void Awake()
+    {
+        agenEnemy = GetComponent<NavMeshAgent>();
+        if (agenEnemy != null)
+        {
+            agentSpeed = agenEnemy.speed;
+        }
+        waypointsTrans = new List<Transform>();
+       
+        for(int i=1;i< waypointsGO.GetComponentsInChildren<Transform>().Length;i++)
+        {
+            Transform g = waypointsGO.GetComponentsInChildren<Transform>()[i];
+          
+            Debug.Log(g.name + " " + g.position);
+            waypointsTrans.Add(g);
+
+        }
+        index = Random.Range(0, waypointsTrans.Count);
+        agenEnemy.destination = waypointsTrans[index].position;
+    }
+
+    void Update()
+    {
+   
+            agenEnemy.destination = waypointsTrans[index].position;
+            if (Vector3.Distance(agenEnemy.destination, transform.position) < 1.5f)
+            {
+                index = Random.Range(0, waypointsTrans.Count);
+                agenEnemy.destination = waypointsTrans[index].position;
+            }
+ }
+    void OnDrawGizmosSelected()
+    {
+        // Draw a yellow sphere at the transform's position
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, 9f);
+    } 
+}
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -92,58 +148,3 @@ public class EnemyAi : MonoBehaviour
     }
 }
 */
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.UI;
-public class EnemyAi : MonoBehaviour
-{
-    [SerializeField]
-    GameObject waypointsGO;
-     
-    private List<Transform> waypointsTrans;
-
-    int index;
-    float speed, agentSpeed;
-    Transform player;
-    NavMeshAgent agenEnemy;
-    bool isWalking = true;
-    void Awake()
-    {
-        agenEnemy = GetComponent<NavMeshAgent>();
-        if (agenEnemy != null)
-        {
-            agentSpeed = agenEnemy.speed;
-        }
-        waypointsTrans = new List<Transform>();
-       
-        for(int i=1;i< waypointsGO.GetComponentsInChildren<Transform>().Length;i++)
-        {
-            Transform g = waypointsGO.GetComponentsInChildren<Transform>()[i];
-          
-            Debug.Log(g.name + " " + g.position);
-            waypointsTrans.Add(g);
-
-        }
-        index = Random.Range(0, waypointsTrans.Count);
-        agenEnemy.destination = waypointsTrans[index].position;
-    }
-
-    void Update()
-    {
-   
-            agenEnemy.destination = waypointsTrans[index].position;
-            if (Vector3.Distance(agenEnemy.destination, transform.position) < 1.5f)
-            {
-                index = Random.Range(0, waypointsTrans.Count);
-                agenEnemy.destination = waypointsTrans[index].position;
-            }
- }
-    void OnDrawGizmosSelected()
-    {
-        // Draw a yellow sphere at the transform's position
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, 9f);
-    } 
-}
